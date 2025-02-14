@@ -80,8 +80,9 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         mono: ["var(--font-mono)", ...fontFamily.mono],
-		poppins: ['Poppins', ...fontFamily.sans],
-		nunito: ['Nunito', ...fontFamily.sans]
+		    poppins: ['Poppins', ...fontFamily.sans],
+		    nunito: ['Nunito', ...fontFamily.sans],
+        inria: ['Inria Sans', ...fontFamily.sans],
       },
       borderRadius: {
         lg: "var(--radius)",
