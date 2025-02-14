@@ -1,5 +1,6 @@
 import { Separator } from "@radix-ui/react-separator";
 import { Input } from "@/components/ui/input"
+import React from "react";
 
 export function Task(){
     const tasks = [
@@ -55,47 +56,41 @@ export function Task(){
             </div>
 
             
-            <div className="flex flex-direction-col space-x-12 items-center">
-              <p className="font-nunito text-xl">Maandag</p>
-              <div className="w-[98px] h-[31px] bg-[#f7bdc4] rounded-[23px]"><p className="font-nunito text-xl pl-3">Dinsdag</p></div>
-            <p className="font-nunito text-xl">Woensdag</p>
-            <p className="font-nunito text-xl">Donderdag</p>
-            <p className="font-nunito text-xl">Vrijdag</p>
-            <p className="font-nunito text-xl">Zaterdag</p>
-            <p className="font-nunito text-xl">Zondag</p>
-            </div>
             
-            <Separator orientation="horizontal" className="w-full h-px bg-black/25  -ml-7 left-1/3"/>
-            <Separator orientation="vertical" className="w-px h-full bg-black/25 absolute left-[42%]" />
-            <Separator orientation="vertical" className="w-px h-full bg-black/25 absolute left-[51%]" />
-            <Separator orientation="vertical" className="w-px h-full bg-black/25 absolute left-[59.75%]" />
-            <Separator orientation="vertical" className="w-px h-full bg-black/25 absolute left-[68.5%]" />
-            <Separator orientation="vertical" className="w-px h-full bg-black/25 absolute left-[77.5%]" />
-            <Separator orientation="vertical" className="w-px h-full bg-black/25 absolute left-[86.25%]" />
-            <Separator orientation="vertical" className="w-px h-full bg-black/25 absolute left-[95%]" />
-
-            <div className="flex flex-col space-y-12 items-end">
-              <p className="font-nunito text-[15px]">08:00</p>
-            <p className="font-nunito text-[15px]">09:00</p>
-            <p className="font-nunito text-[15px]">10:00</p>
-            <p className="font-nunito text-[15px]">11:00</p>
-            <p className="font-nunito text-[15px]">12:00</p>
-            <p className="font-nunito text-[15px]">13:00</p>
-            <p className="font-nunito text-[15px]">14:00</p>
-            <p className="font-nunito text-[15px]">15:00</p>
-            <p className="font-nunito text-[15px]">16:00</p>
-            </div>
-
-            <Separator orientation="horizontal" className="absolute top-[35%] left-1/3 w-2/3 h-px bg-pink-500/25" />
-            <Separator orientation="horizontal" className="w-2/3 h-px bg-pink-500/25 left-1/3 absolute top-[45%]"/>
-            <Separator orientation="horizontal" className="w-2/3 h-px bg-pink-500/25 left-1/3 absolute top-[55%]"/>
-            <Separator orientation="horizontal" className="w-2/3 h-px bg-pink-500/25 left-1/3 absolute top-[65%]"/>
-            <Separator orientation="horizontal" className="w-2/3 h-px bg-pink-500/25 left-1/3 absolute top-[75%]"/>
-            <Separator orientation="horizontal" className="w-2/3 h-px bg-pink-500/25 left-1/3 absolute top-[85%]"/>
-            <Separator orientation="horizontal" className="w-2/3 h-px bg-pink-500/25 left-1/3 absolute top-[95%]"/>
-           
           </div>
           
+
+          <div className="absolute left-1/3 w-2/3 h-[600px] overflow-y-auto border border-gray-300 rounded-lg">
+  <div className="grid grid-cols-8 grid-rows-25 h-[2500px] relative">
+    
+    {/* Header: 7 dagen bovenaan */}
+    <div className="bg-[#f7bdc4] border-b border-gray-300"></div>
+    {["Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag"].map((day, index) => (
+      <div key={`day-${index}`} className="text-center font-nunito text-xl p-2 bg-[#f7bdc4] border-b border-l border-gray-300">
+        {day}
+      </div>
+    ))}
+    
+    {/* 24 Uur kolommen */}
+    {[...Array(24)].map((_, hour) => (
+      <React.Fragment key={`hour-${hour}`}>
+        {/* Uur-label aan de linkerkant */}
+        <div className="text-right pr-2 border-r border-black/25 text-gray-600 font-nunito">
+          {hour}:00
+        </div>
+
+        {/* 7 Kolommen voor de dagen */}
+        {[...Array(7)].map((_, day) => (
+          <div key={`cell-${hour}-${day}`} className="border border-black/25 h-[100px]"></div>
+        ))}
+      </React.Fragment>
+    ))}
+  </div>
+</div>
+
+
+
+           
         </div>
       </div> 
         
