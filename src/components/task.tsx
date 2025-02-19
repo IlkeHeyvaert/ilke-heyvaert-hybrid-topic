@@ -60,13 +60,13 @@ export function Task(){
           </div>
           
 
-          <div className="absolute left-1/3 w-2/3 h-[600px] overflow-y-auto border border-gray-300 rounded-lg">
+          <div className="absolute left-1/3 w-2/3 h-[590px] overflow-y-auto border border-gray-300 rounded-lg mt-3">
   <div className="grid grid-cols-8 grid-rows-25 h-[2500px] relative">
     
     {/* Header: 7 dagen bovenaan */}
-    <div className="bg-[#f7bdc4] border-b border-gray-300"></div>
+    <div className="bg-white border-b border-gray-300"></div>
     {["Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag"].map((day, index) => (
-      <div key={`day-${index}`} className="text-center font-nunito text-xl p-2 bg-[#f7bdc4] border-b border-l border-gray-300">
+      <div key={`day-${index}`} className="text-center font-nunito text-xl p-2 bg-white border-b border-l border-gray-300">
         {day}
       </div>
     ))}
@@ -74,7 +74,7 @@ export function Task(){
     {/* 24 Uur kolommen */}
     {[...Array(24)].map((_, hour) => (
       <React.Fragment key={`hour-${hour}`}>
-        {/* Uur-label aan de linkerkant */}
+        {/* Uur-label aan de rechterkant */}
         <div className="text-right pr-2 border-r border-black/25 text-gray-600 font-nunito">
           {hour}:00
         </div>
