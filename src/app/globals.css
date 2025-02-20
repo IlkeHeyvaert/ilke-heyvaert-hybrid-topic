@@ -87,3 +87,14 @@ body {
   }
 }
 
+/* Scrollbar volledig verbergen */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Voor IE en Edge */
+  scrollbar-width: none; /* Voor Firefox */
+}
+
+
