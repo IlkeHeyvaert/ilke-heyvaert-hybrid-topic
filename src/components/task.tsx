@@ -1,11 +1,34 @@
 import { Separator } from "@radix-ui/react-separator";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input"
 import { db } from "@/db/client";
 import { tasks } from "@/db/schema";
 import React from "react";
+import { eq, asc } from "drizzle-orm";
+import { CheckIcon} from "lucide-react";
+import { revalidatePath } from "next/cache";
 
 export async function Task(){
-    const taskList = await db.select().from(tasks);
+    const taskList = await db.select().from(tasks).orderBy(asc(tasks.createdAt));
+
+    async function completeTask(formData: FormData) {
+      "use server";
+  
+      const id = formData.get("id")?.toString() ?? "";
+  
+      await db.update(tasks).set({ completed: true }).where(eq(tasks.id, id));
+      revalidatePath("/");
+    }
+
+    async function addTask(formData: FormData) {
+      "use server";
+
+      const title = formData.get("title")?.toString() ?? "";
+
+      await db.insert(tasks).values({ title, completed: false, time_it_takes: "1 hour" });
+      revalidatePath("/");
+    }
 
     return (
       <div className="flex flex-col md:flex-row">
@@ -14,20 +37,37 @@ export async function Task(){
             <p className="w-[44px] h-8 text-[#4a4a4a] text-xl font-normal font-nunito">💰 0</p>
           </div>
           <div className="flex flex-col items-start space-y-4 ml-12 mt-3">
-            <div className="w-[223px] h-[27px] text-black text-xl font-normal font-nunito">Nog {taskList.length} taken af te ronden</div>
-            {taskList.map(({id, title}) => (
-              <div key={id} className="w-[392px] h-[75px] bg-orange-100 rounded-[9px] shadow-md flex items-center justify-between px-4">
-                <div className="text-black text-xl font-normal font-nunito">{title}</div>
-                <div data-svg-wrapper>
-                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19.0999 30.3L36.0499 13.35C36.4499 12.95 36.9165 12.75 37.4499 12.75C37.9832 12.75 38.4499 12.95 38.8499 13.35C39.2499 13.75 39.4499 14.2253 39.4499 14.776C39.4499 15.3267 39.2499 15.8013 38.8499 16.2L20.4999 34.6C20.0999 35 19.6332 35.2 19.0999 35.2C18.5665 35.2 18.0999 35 17.6999 34.6L9.09987 26C8.69987 25.6 8.50787 25.1253 8.52387 24.576C8.53987 24.0267 8.74854 23.5513 9.14987 23.15C9.55121 22.7487 10.0265 22.5487 10.5759 22.55C11.1252 22.5513 11.5999 22.7513 11.9999 23.15L19.0999 30.3Z" fill="#B6E2D3"/>
-                  </svg>
+            <div className="w-[223px] h-[27px] text-black text-xl font-normal font-nunito">Nog {taskList.filter(task => !task.completed).length} taken af te ronden</div>
+            {taskList.map(({id, title, completed}) => (
+              <form key={id}>
+              <Card
+                data-completed={completed}
+                className="w-[392px] h-[75px] bg-orange-100 rounded-[9px] shadow-md flex items-center justify-between px-4 data-[completed='true']:bg-[#4A4A4A] data-[completed=true]:line-through data-[completed=true]:text-white"
+              >
+                <Input type="hidden" name="id" value={id} />
+
+                <CardDescription className={`text-xl font-normal font-nunito transition-colors duration-200 
+                   ${completed ? "text-white line-through" : "text-black"}`} >{title}</CardDescription>
+
+                <div className="flex gap-x-3">
+                  {!completed && (
+                    <Button size="icon" variant="link" className="bg-orange-100 border-none" formAction={completeTask}>
+                      <CheckIcon className="!w-11 !h-11 text-[#B6E2D3]"/>
+
+                    </Button>
+                  )}
                 </div>
-              </div>
+              </Card>
+            </form>
+              
             ))}
-            <div className="w-[392px] h-[75px] bg-[#f8afa6] opacity-80 rounded-[9px] shadow-md flex items-center justify-between px-4">
-              <div className="text-white text-xl font-normal font-nunito"><Input type="text" placeholder="Voeg een taak toe..." className="text-white bg-[#f8afa6] placeholder-white border-none text-input-white focus:outline-none focus:border-0"/></div>
+
+          <form className="flex items-center" action={addTask}>
+          <div className="w-[392px] h-[75px] bg-[#f8afa6] opacity-80 rounded-[9px] shadow-md flex items-center justify-between px-4">
+              <div className="text-white text-xl font-normal font-nunito"><Input type="text" name="title" placeholder="Voeg een taak toe..." className="text-white bg-[#f8afa6] placeholder-white border-none text-input-white focus:outline-none focus:border-0" required/></div>
             </div>
+        </form>
+
           </div>
         </div>
     
