@@ -1,8 +1,8 @@
 
 import React from 'react'
 
-import { Navigation } from "../components/navigation";
-import { Task } from "../components/task";
+import { Navigation } from "../../components/navigation";
+import { Task } from "../../components/task";
 import { Separator } from "@radix-ui/react-separator";
 import { Planner } from "@/components/Planner";
 
