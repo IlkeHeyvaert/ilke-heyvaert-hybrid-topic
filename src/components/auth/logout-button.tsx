@@ -10,8 +10,8 @@ export function LogoutButton() {
 
   return (
     <Button
-      variant="outline"
-      className="absolute right-2 top-2"
+
+      className="absolute right-12 top-4 font-nunito font-normal hover:bg-[#f7bdc4] hover:text-black text-white bg-[#4a4a4a]"
       onClick={async () => {
         const { data, error } = await authClient.signOut();
 
