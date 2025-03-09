@@ -1,13 +1,17 @@
-
+"use client";
 import React from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { Navigation } from "../../components/navigation";
-import { Task } from "../../components/task";
+import {Task} from "../../components/task";
 import { Separator } from "@radix-ui/react-separator";
 import { Planner } from "@/components/Planner";
 
 export default  function Home() {
+
   return (
+    <DndProvider backend={HTML5Backend}>
   <div className="min-h-screen flex flex-col">
     <header className="z-10">
       <Navigation />
@@ -18,7 +22,7 @@ export default  function Home() {
         <Planner/>
       </main>
   </div>
-     
+     </DndProvider>
         
   );
 }
