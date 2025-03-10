@@ -24,7 +24,7 @@ export function Task() {
       </div>
 
       <div className="flex flex-col items-start space-y-4 ml-12 mt-3">
-        <div className="w-[223px] h-[27px] text-black text-xl font-normal font-nunito">Nog 5 taken af te ronden</div>
+        <div className="w-[223px] h-[27px] text-black text-xl font-normal font-nunito">Nog {tasks.length} taken af te ronden</div>
         <div className="overflow-y-auto max-h-[500px] scrollbar-hide space-y-4">
           {tasks.map((task, index) => (
             <DraggableTask key={index} task={task} index={index} completed={completed} />
