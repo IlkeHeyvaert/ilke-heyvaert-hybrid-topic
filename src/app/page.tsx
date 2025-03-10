@@ -3,8 +3,8 @@ import React from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import { Navigation } from "../../components/navigation";
-import {Task} from "../../components/task";
+import { Navigation } from "../components/navigation";
+import {Task} from "../components/task";
 import { Separator } from "@radix-ui/react-separator";
 import { Planner } from "@/components/Planner";
 
